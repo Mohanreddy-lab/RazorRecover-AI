@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: razor-recover-ai
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/health
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    disk:
+      name: razor-recover-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_PATH
+        value: /data/razorrecover.db
+      - key: APP_URL
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: RAZORPAY_WEBHOOK_SECRET
+        sync: false
+      - key: AUTH_SESSION_SECRET
+        generateValue: true
+      - key: AUTH_ADMIN_EMAIL
+        sync: false
+      - key: AUTH_ADMIN_PASSWORD
+        sync: false
+      - key: AUTH_MERCHANT_EMAIL
+        sync: false
+      - key: AUTH_MERCHANT_PASSWORD
+        sync: false
