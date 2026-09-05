@@ -1,0 +1,6 @@
+{
+  "name": "RazorRecover AI",
+  "description": "Deterministic payment failure triage and automated revenue recovery engine for Razorpay with circuit breakers and financial guardrails.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_PAYMENT_RECOVERY"]
+}
