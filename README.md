@@ -15,7 +15,7 @@ Built for [Razorpay AI Buildathon 2026](https://razorpay.com/buildathon/) — Tr
 🌐 **Live Working Demo:** [https://razorrecover-ai-9x1v.onrender.com/](https://razorrecover-ai-9x1v.onrender.com/)
 
 🔑 **Merchant Demo Login Credentials:**
-- **Email / Merchant ID:** `mohan@gmail.com`
+- **Email / admin,Merchant ID:** `mohan@gmail.com`
 - **Password:** `mohan@gmail.com`
 
 ---
