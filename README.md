@@ -14,6 +14,10 @@ Built for [Razorpay AI Buildathon 2026](https://razorpay.com/buildathon/) — Tr
 
 🌐 **Live Working Demo:** [https://razorrecover-ai-9x1v.onrender.com/](https://razorrecover-ai-9x1v.onrender.com/)
 
+🔑 **Merchant Demo Login Credentials:**
+- **Email / Merchant ID:** `mohan@gmail.com`
+- **Password:** `mohan@gmail.com`
+
 ---
 
 ## 💡 What Is This?
@@ -228,9 +232,12 @@ Once the server is running, you can test these scenarios from the admin dashboar
 
 ---
 
-## 🎬 Live Demo & Video
+## 🎬 Live Demo & Credentials
 
 - 🌐 **Live Web Application:** [https://razorrecover-ai-9x1v.onrender.com/](https://razorrecover-ai-9x1v.onrender.com/)
+- 🔑 **Merchant & Admin Login:**
+  - **Email / ID:** `mohan@gmail.com`
+  - **Password:** `mohan@gmail.com`
 
 ---
 
