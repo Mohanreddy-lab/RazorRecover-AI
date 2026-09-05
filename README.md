@@ -57,6 +57,22 @@ RazorRecover AI:
 
 ## 📐 System Architecture Diagram
 
+### ⚡ Simplified High-Level Flow
+
+```mermaid
+flowchart TD
+   A[Razorpay webhooks + payment polling] --> B[Express webhook listener]
+   B --> C{Payment state}
+   C -->|Captured, webhook missed| D[Auto-reconcile order as PAID]
+   C -->|Amount mismatch| E[Hold fulfillment + merchant alert]
+   C -->|Duplicate capture| F[Keep first + initiate refund]
+   C -->|Failed| G[Deterministic recovery rules]
+   G --> H[Circuit breaker + margin guardrails]
+   H --> I[Fallback link or WAIT_RETRY]
+```
+
+### ⚙️ Detailed Multi-Layer System Architecture
+
 ```mermaid
 flowchart TB
     %% Define colors
