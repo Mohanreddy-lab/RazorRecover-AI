@@ -385,6 +385,16 @@ I also wanted to prove that you don't need AI hype to build something smart. The
 
 ---
 
+## 📬 Contact & Author
+
+- **Developer:** BUSIREDDY MOHAN NARAYANA REDDY
+- **GitHub:** [@Mohanreddy-lab](https://github.com/Mohanreddy-lab)
+- **Repository:** [RazorRecover-AI](https://github.com/Mohanreddy-lab/RazorRecover-AI)
+- **Live Application:** [https://razorrecover-ai-9x1v.onrender.com/](https://razorrecover-ai-9x1v.onrender.com/)
+- **Merchant Credentials:** `mohan@gmail.com` / `mohan@gmail.com`
+
+---
+
 ## 🙏 Acknowledgments
 
 - **Razorpay** for hosting the Razorpay AI Buildathon 2026 and building excellent payment APIs
@@ -398,7 +408,7 @@ I also wanted to prove that you don't need AI hype to build something smart. The
 MIT License — feel free to use this for learning or your own projects. Just don't use it for production without adding proper security measures (database, auth, rate limiting, etc.).
 
 ```
-Copyright (c) 2026 RazorRecover AI
+Copyright (c) 2026 BUSIREDDY MOHAN NARAYANA REDDY
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -414,6 +424,8 @@ copies or substantial portions of the Software.
 ---
 
 <div align="center">
+
+**Made with ❤️ by BUSIREDDY MOHAN NARAYANA REDDY**
 
 **Built for Razorpay AI Buildathon 2026** 🚀
 
