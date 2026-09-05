@@ -55,6 +55,89 @@ RazorRecover AI:
 - **2 hours/day support time saved** on manual reconciliation
 - **₹2.34L recovered** in demo testing alone
 
+## 📐 System Architecture Diagram
+
+```mermaid
+flowchart TB
+    %% Define colors
+    classDef razorpay fill:#3b82f6,stroke:#1e40af,stroke-width:2px,color:#fff
+    classDef backend fill:#10b981,stroke:#047857,stroke-width:2px,color:#fff
+    classDef frontend fill:#f59e0b,stroke:#b45309,stroke-width:2px,color:#fff
+    classDef database fill:#8b5cf6,stroke:#6d28d9,stroke-width:2px,color:#fff
+    classDef security fill:#ef4444,stroke:#b91c1c,stroke-width:2px,color:#fff
+
+    subgraph External["🌐 External Services"]
+        RP[Razorpay APIs<br/>- Webhooks<br/>- Payment Links<br/>- Orders API]:::razorpay
+        WA[WhatsApp/Twilio<br/>- Customer Messages]:::razorpay
+        BH[Bank Health API<br/>- NPCI Status<br/>- Bank Uptime]:::razorpay
+    end
+
+    subgraph Backend["⚙️ Backend (Express.js + TypeScript)"]
+        WH[📥 Webhook Handler<br/>POST /webhook/payment.failed]:::backend
+        ID[🔐 Idempotency Check<br/>Event ID Deduplication]:::backend
+        TS[✅ Terminal State<br/>Order Status Verification]:::backend
+        RC[🔄 Reconciliation<br/>Payment ↔ Order Matching]:::backend
+        BH2[🏦 Bank Health Check<br/>Status: Operational/Degraded/Down]:::backend
+        CB[⚡ Circuit Breaker<br/>3 failures/60s → Open]:::backend
+        DR[🧠 Deterministic Recovery<br/>Rule Engine]:::backend
+        MG[💰 Margin Guardrail<br/>Max Discount Calculator]:::backend
+        AL[🔒 Audit Ledger<br/>SHA-256 Chained]:::backend
+        RS[📤 Response Sender<br/>WhatsApp + Payment Link]:::backend
+    end
+
+    subgraph Data["💾 Data Stores"]
+        IMS[In-Memory Store<br/>- Orders<br/>- Payments<br/>- Sessions]:::database
+        AL_DB[Audit Logs<br/>SHA-256 Chain]:::database
+        CB_DB[Circuit Breaker State<br/>Failure Counts]:::database
+    end
+
+    subgraph Frontend["🖥️ Frontend (React + Tailwind)"]
+        MD[📊 Merchant Dashboard<br/>Revenue Metrics<br/>Activity Feed]:::frontend
+        AD[⚙️ Admin Console<br/>Pipeline Visualizer<br/>Audit Logs<br/>Circuit Controls]:::frontend
+        DP[🔍 Decision Proof<br/>7-Layer Explanation<br/>Audit Hash]:::frontend
+        HD[🏠 Home Page<br/>Features<br/>How It Works]:::frontend
+    end
+
+    %% Data Flow - External to Backend
+    RP -->|"1. payment.failed webhook<br/>{order_id, error_code, bank, amount}"| WH
+    BH -->|"Bank Status<br/>Operational/Degraded/Down"| BH2
+    WA <-->|"3. Recovery Message<br/>+ Payment Link"| RS
+
+    %% Data Flow - Backend Pipeline
+    WH -->|"2. Extract payload<br/>order_id, error_code, bank"| ID
+    ID -->|"4. Check event ID<br/>Not seen before?"| TS
+    TS -->|"5. Fetch order status<br/>Is payment FAILED?"| RC
+    RC -->|"6. Check order<br/>Already paid?"| BH2
+    BH2 -->|"7. Bank status check<br/>HDFC = DEGRADED"| CB
+    CB -->|"8. Circuit state<br/>Open/Closed?"| DR
+    DR -->|"9. Diagnosis<br/>BANK_DOWN / INSUFFICIENT_FUNDS"| MG
+    MG -->|"10. Calculate discount<br/>Max 10% cap"| RS
+
+    %% Data Flow - Backend to Data
+    ID -.->|"Store event ID<br/>24h TTL"| IMS
+    RC -.->|"Read/Write orders<br/>Payment status"| IMS
+    AL -.->|"Append audit record<br/>SHA-256 hash chain"| AL_DB
+    CB -.->|"Update failure count<br/>Window: 60s"| CB_DB
+
+    %% Data Flow - Backend to Frontend
+    RS -->|"11. Recovery decision<br/>+ audit hash"| AD
+    AL_DB -->|"Audit logs<br/>Searchable table"| AD
+    CB_DB -->|"Circuit status<br/>Open/Closed"| AD
+    IMS -->|"Metrics:<br/>- Recovered revenue<br/>- Failed payments"| MD
+    DR -->|"Decision proof<br/>7-layer breakdown"| DP
+
+    %% Styling
+    linkStyle default stroke:#94a3b8,stroke-width:2px
+```
+
+> [!IMPORTANT]
+> ### 🔴 CRITICAL SAFETY CHECKS
+> - **Idempotency Check:** Prevents duplicate webhook processing using 24-hour TTL event tracking.
+> - **Terminal State Verification:** Verifies payment failure state with Razorpay before triggering recovery links.
+> - **Order Reconciliation:** Halts recovery if order is already paid, eliminating double-charge risks.
+> - **Bank Health Telemetry & Circuit Breaker:** Trips after 3 consecutive failures to stop sending broken payment methods.
+> - **Financial Margin Guardrail:** Enforces maximum 10% discount caps to protect merchant profit margins.
+
 ---
 
 ## 🏗️ How It Works
